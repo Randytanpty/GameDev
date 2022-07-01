@@ -31,7 +31,7 @@ public class PlayerMotor2 : MonoBehaviour
         controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
         playerVelocity.y += gravity* Time.deltaTime;
         if (isGrounded && playerVelocity.y < 0) {
-            playerVelocity.y = -2f;
+            playerVelocity.y = -0.1f;
         }
         controller.Move(playerVelocity * Time.deltaTime);
         Debug.Log(playerVelocity.y);
@@ -40,7 +40,7 @@ public class PlayerMotor2 : MonoBehaviour
 
     public void Jump() {
         if (isGrounded) {
-            playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+            playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.13f * gravity);
         }
     }
 }
