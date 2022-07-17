@@ -40,6 +40,16 @@ public class FPSController : MonoBehaviour
 
     private FPSPlayerAnimations playerAnimation;
 
+    [SerializeField]
+    private WeaponManager weapon_Manager;
+    private FPSWeapon current_Weapon;
+
+    private float fireRate = 15f;
+    private float nextTimeToFire = 0f;
+
+    [SerializeField]
+    private WeaponManager handsWeapon_Manager;
+    private FPSHandsWeapon current_Hands_Weapon;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,12 +64,16 @@ public class FPSController : MonoBehaviour
 
         playerAnimation = GetComponent<FPSPlayerAnimations>();
 
+        weapon_Manager.weapons[0].SetActive(true);
+        current_Weapon = weapon_Manager.weapons[0].GetComponent<FPSWeapon>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayMovement();
+        SelectWeapon();
     }
 
     void PlayMovement() {
@@ -200,6 +214,74 @@ public class FPSController : MonoBehaviour
         if (is_Crouching && CharacterController.velocity.magnitude > 0f) {
             playerAnimation.PlayerCrouchWalk(CharacterController.velocity.magnitude);
         }
+
+        // Shooting
+        // Time.time -> from game starting till now
+        if (Input.GetMouseButtonDown(0) && Time.time > nextTimeToFire) {
+            nextTimeToFire = Time.time + 1f / fireRate;
+
+            if (is_Crouching) {
+                playerAnimation.Shoot (false);
+            } else {
+                playerAnimation.Shoot(true);
+            }
+
+            // muzzle falsh
+            current_Weapon.shoot();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R)) {
+            playerAnimation.ReloadGun();
+        }
+    }
+
+
+    void SelectWeapon() {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            if (!weapon_Manager.weapons[0].activeInHierarchy) {
+                for (int i = 0; i < weapon_Manager.weapons.Length; ++i) {
+                    weapon_Manager.weapons[i].SetActive(false);
+                }
+
+                current_Weapon = null;
+                weapon_Manager.weapons[0].SetActive(true);
+                current_Weapon = weapon_Manager.weapons[0].GetComponent<FPSWeapon>();
+
+                playerAnimation.ChangeController(true);
+
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            if (!weapon_Manager.weapons[1].activeInHierarchy) {
+                for (int i = 0; i < weapon_Manager.weapons.Length; ++i) {
+                    weapon_Manager.weapons[i].SetActive(false);
+                }
+
+                current_Weapon = null;
+                weapon_Manager.weapons[1].SetActive(true);
+                current_Weapon = weapon_Manager.weapons[1].GetComponent<FPSWeapon>();
+
+                playerAnimation.ChangeController(false);
+
+            }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            if (!weapon_Manager.weapons[2].activeInHierarchy) {
+                for (int i = 0; i < weapon_Manager.weapons.Length; ++i) {
+                    weapon_Manager.weapons[i].SetActive(false);
+                }
+
+                current_Weapon = null;
+                weapon_Manager.weapons[2].SetActive(true);
+                current_Weapon = weapon_Manager.weapons[2].GetComponent<FPSWeapon>();
+
+                playerAnimation.ChangeController(false);
+
+            }
+        }
     }
 
 
@@ -211,23 +293,7 @@ public class FPSController : MonoBehaviour
 
 
 
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+} // class
 
 
 
