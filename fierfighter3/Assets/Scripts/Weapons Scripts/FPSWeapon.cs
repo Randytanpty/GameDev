@@ -13,7 +13,7 @@ public class FPSWeapon : MonoBehaviour
         muzzleFlash.SetActive(false);
     }
 
-    public void shoot() {
+    public void Shoot() {
         StartCoroutine(TurnOnMuzzleFlash());
     }
 
