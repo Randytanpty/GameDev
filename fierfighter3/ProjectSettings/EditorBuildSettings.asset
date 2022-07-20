@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/IceWorld.unity
+    guid: f8e2929ac314702469d4578c28aa92b8
   m_configObjects: {}
