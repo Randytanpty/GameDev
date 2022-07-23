@@ -51,6 +51,14 @@ public class FPSController : NetworkBehaviour
     [SerializeField]
     private WeaponManager handsWeapon_Manager;
     private FPSHandsWeapon current_Hands_Weapon;
+
+    public GameObject palyerHolder, weaponsHolder;
+    // model weapons, not hands
+    public GameObject[] weapons_FPS;
+    private Camera mainCam;
+    public FPSMouseLook[] mouseLook;
+
+
     // Start is called before the first frame update
     void Start()
     {
