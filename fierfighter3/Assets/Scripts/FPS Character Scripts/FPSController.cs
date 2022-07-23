@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class FPSController : MonoBehaviour
+public class FPSController : NetworkBehaviour
 {
 
     private Transform firstPerson_View;
@@ -76,6 +77,10 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // only the localPlayer runs the code
+        if (!isLocalPlayer) {
+            return;
+        }
         PlayMovement();
         SelectWeapon();
     }
