@@ -122,7 +122,7 @@ public class FPSController : NetworkBehaviour
             }
         }
         mainCam = transform.Find("FPS View").Find("FPS Camera").GetComponent<Camera>();
-        // mainCam.gameObject.SetActive(false);
+        mainCam.gameObject.SetActive(false);
 
 
 
@@ -131,6 +131,11 @@ public class FPSController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isLocalPlayer) {
+            if (!mainCam.gameObject.activeInHierarchy) {
+                mainCam.gameObject.SetActive(true);
+            }
+        }
         // only the localPlayer runs the code
         if (!isLocalPlayer) {
             return;
